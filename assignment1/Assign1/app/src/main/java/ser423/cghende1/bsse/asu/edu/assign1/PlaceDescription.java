@@ -25,6 +25,8 @@
 package ser423.cghende1.bsse.asu.edu.assign1;
 
 import java.lang.Math;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 public class PlaceDescription {
 
@@ -48,6 +50,18 @@ public class PlaceDescription {
         this.elevation = elevation;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public PlaceDescription(String json) throws Exception {
+        JSONObject obj = (JSONObject) new JSONTokener(json).nextValue();
+        this.name = obj.getString("name");
+        this.description = obj.getString("description");
+        this.category = obj.getString("category");
+        this.address_title = obj.getString("address-title");
+        this.address_street = obj.getString("address_street");
+        this.elevation = obj.getDouble("elevation");
+        this.latitude = obj.getDouble("latitude");
+        this.longitude = obj.getDouble("longitude");
     }
 
     public double greatCircleDistance(PlaceDescription other) {
