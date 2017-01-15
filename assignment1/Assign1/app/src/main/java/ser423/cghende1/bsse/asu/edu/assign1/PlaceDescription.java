@@ -78,6 +78,23 @@ public class PlaceDescription {
         );
     }
 
+    public String toJSON() {
+        try {
+            JSONObject obj = new JSONObject();
+            obj.put("name", this.name);
+            obj.put("description", this.description);
+            obj.put("category", this.category);
+            obj.put("address-title", this.address_title);
+            obj.put("address_street", this.address_street);
+            obj.put("elevation", this.elevation);
+            obj.put("latitude", this.latitude);
+            obj.put("longitude", this.longitude);
+            return obj.toString(2);
+        } catch (Exception err) {
+            return err.toString();
+        }
+    }
+
     public double getLongitude() {
         return longitude;
     }
