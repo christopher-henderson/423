@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Assign1</string>
+    <string name="name">name</string>
+    <string name="description">description</string>
+    <string name="category">category</string>
+    <string name="address_title_JSON">address-title</string>
+    <string name="address_street_JSON">address-street</string>
+    <string name="address_title">address_title</string>
+    <string name="address_street">address_street</string>
+    <string name="elevation">elevation</string>
+    <string name="latitude">latitude</string>
+    <string name="longitude">longitude</string>
+</resources>
