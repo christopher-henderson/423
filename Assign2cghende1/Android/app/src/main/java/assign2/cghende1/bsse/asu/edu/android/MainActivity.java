@@ -18,21 +18,25 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void finishApp(View view) {
+        this.finish();
+    }
+
     /*
-    Clicked the 'home' button to get this to log.
+    Clicked the button to go to the alert activity.
      */
     @Override
     protected void onStop() {
-        android.util.Log.w("Override Stop", this.getClass().getSimpleName());
+        android.util.Log.w("Override Stop from:", this.getClass().getSimpleName());
         super.onStop();
     }
 
     /*
-    Clicked the 'home' button to get this to log.
+    Clicked the button to go to the alert activity.
      */
     @Override
     protected void onPause() {
-        android.util.Log.w("Override Pause", this.getClass().getSimpleName());
+        android.util.Log.w("Override Pause from:", this.getClass().getSimpleName());
         super.onStop();
     }
 
@@ -44,23 +48,26 @@ public class MainActivity extends AppCompatActivity {
     */
     @Override
     protected void onStart() {
-        android.util.Log.w("Override Start", this.getClass().getSimpleName());
+        android.util.Log.w("Override Start from:", this.getClass().getSimpleName());
         super.onStart();
     }
 
+    /*
+    After clicking the "Exit" button which calls this.finish().
+     */
     @Override
     protected void onDestroy() {
-        android.util.Log.w("Override Destroy", this.getClass().getSimpleName());
+        android.util.Log.w("Override Destroy from:", this.getClass().getSimpleName());
         super.onDestroy();
     }
 
     /*
     After going to back to the home screen, I selected the application
-    from the "recent applications" activity.
+    from the "recent applications" activity. Also, when first starting the app.
      */
     @Override
     protected void onResume() {
-        android.util.Log.w("Override Resume", this.getClass().getSimpleName());
+        android.util.Log.w("Override Resume from:", this.getClass().getSimpleName());
         super.onResume();
     }
 
@@ -72,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     */
     @Override
     protected void onRestart() {
-        android.util.Log.w("Override Restart", this.getClass().getSimpleName());
+        android.util.Log.w("Override Restart from:", this.getClass().getSimpleName());
         super.onRestart();
     }
 }

@@ -12,7 +12,6 @@ public class AlertActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert2);
 
-        // @TODO https://stackoverflow.com/questions/6624480/how-to-customize-the-width-and-height-when-show-an-activity-as-a-dialog
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.x = -10;
         params.height = 1000;
@@ -31,7 +30,7 @@ public class AlertActivity extends AppCompatActivity {
      */
     @Override
     protected void onStop() {
-        android.util.Log.w("Override Stop", this.getClass().getSimpleName());
+        android.util.Log.w("Override Stop from:", this.getClass().getSimpleName());
         super.onStop();
     }
 
@@ -40,7 +39,7 @@ public class AlertActivity extends AppCompatActivity {
      */
     @Override
     protected void onPause() {
-        android.util.Log.w("Override Pause", this.getClass().getSimpleName());
+        android.util.Log.w("Override Pause from:", this.getClass().getSimpleName());
         super.onStop();
     }
 
@@ -49,7 +48,7 @@ public class AlertActivity extends AppCompatActivity {
     */
     @Override
     protected void onStart() {
-        android.util.Log.w("Override Start", this.getClass().getSimpleName());
+        android.util.Log.w("Override Start from:", this.getClass().getSimpleName());
         super.onStart();
     }
 
@@ -58,7 +57,7 @@ public class AlertActivity extends AppCompatActivity {
      */
     @Override
     protected void onDestroy() {
-        android.util.Log.w("Override Destroy", this.getClass().getSimpleName());
+        android.util.Log.w("Override Destroy from:", this.getClass().getSimpleName());
         super.onDestroy();
     }
 
@@ -67,17 +66,17 @@ public class AlertActivity extends AppCompatActivity {
     */
     @Override
     protected void onResume() {
-        android.util.Log.w("Override Resume", this.getClass().getSimpleName());
+        android.util.Log.w("Override Resume from:", this.getClass().getSimpleName());
         super.onResume();
     }
 
     /*
-    Also, after going to back to the home screen, I selected the application
+    After going to back to the home screen, I selected the application
     from the "recent applications" activity.
     */
     @Override
     protected void onRestart() {
-        android.util.Log.w("Override Restart", this.getClass().getSimpleName());
+        android.util.Log.w("Override Restart from:", this.getClass().getSimpleName());
         super.onRestart();
     }
 }
