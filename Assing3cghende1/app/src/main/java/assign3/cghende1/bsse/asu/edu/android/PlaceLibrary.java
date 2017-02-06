@@ -1,5 +1,7 @@
 package assign3.cghende1.bsse.asu.edu.android;
 
+import android.app.Application;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.List;
  * Created by chris on 2/6/17.
  */
 
-public class PlaceLibrary {
+public class PlaceLibrary extends Application {
     HashMap<String, PlaceDescription> places;
 
     PlaceLibrary(JSONObject places) {
@@ -35,5 +37,9 @@ public class PlaceLibrary {
 
     public List<String> keys() {
         return new ArrayList<String>(this.places.keySet());
+    }
+
+    public PlaceDescription get(String name) {
+        return this.places.get(name);
     }
 }

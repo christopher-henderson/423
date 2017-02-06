@@ -56,7 +56,6 @@ public class PlaceDescription {
     }
 
     public PlaceDescription(JSONObject obj) throws Exception {
-//        JSONObject obj = (JSONObject) new JSONTokener(json).nextValue();
         this.name = obj.getString("name");
         this.description = obj.getString("description");
         this.category = obj.getString("category");
