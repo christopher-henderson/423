@@ -3,6 +3,9 @@ package assign3.cghende1.bsse.asu.edu.android;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -36,6 +39,39 @@ public class MainActivity extends AppCompatActivity {
             this.initFromIntent();
         }
         this.initListView();
+    }
+
+        /*
+     * One way to create Aciton Bar Buttons is to use xml menu specification. Create the file:
+     * res/menu/main_activity_actions.xml to include contents as in this project.
+     * reference to any images for the action bar should be created by right clicking on res folder
+     * in the project and creating a new image asset. Be sure to specify Action Bar & Tab Icon
+     */
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        android.util.Log.d(this.getClass().getSimpleName(), "called onCreateOptionsMenu()");
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /*
+ * Implement onOptionsItemSelected(MenuItem item){} to handle clicks of buttons that are
+ * in the action bar.
+ */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        android.util.Log.d(this.getClass().getSimpleName(), "called onOptionsItemSelected()");
+        Intent intent = new Intent(this, add.class);
+        switch (item.getItemId()) {
+            case R.id.add_place:
+                intent.putExtra("places", this.placeLibrary.toJSON());
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     protected void init() {

@@ -37,11 +37,6 @@ public class modify extends AppCompatActivity {
         category.setText(this.place.getCategory());
         description.setText(this.place.getDescription());
         image.setText(this.place.getImage());
-//        android.util.Log.w("WHOA", intent.getStringExtra("place"));
-//        android.util.Log.w("WHOA", intent.getStringExtra("places"));
-//        Intent i = new Intent(this, MainActivity.class);
-//        i.putExtra("places", intent.getStringExtra("places"));
-//        startActivity(i);
     }
 
     public void save(View v) {
