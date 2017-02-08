@@ -31,6 +31,29 @@ public class PlaceLibrary extends Application {
         }
     }
 
+    PlaceLibrary(String places) {
+        this.places = new HashMap<String, PlaceDescription>();
+        try {
+            JSONObject obj = new JSONObject(places);
+            Iterator<String> keys = obj.keys();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                JSONObject placeJSON = new JSONObject((String)obj.get(key));
+                this.places.put(key, new PlaceDescription(placeJSON));
+            }
+        } catch (Exception ex) {
+            android.util.Log.w("Failed to deserialize.", ex);
+        }
+    }
+
+    public String toJSON() {
+        HashMap<String, String> newMap = new HashMap<String, String>();
+        for (String key : this.places.keySet()) {
+            newMap.put(key, this.places.get(key).toJSON());
+        }
+        return new JSONObject(newMap).toString();
+    }
+
     public ArrayList<PlaceDescription> values() {
         return (ArrayList<PlaceDescription>) places.values();
     }
@@ -41,5 +64,13 @@ public class PlaceLibrary extends Application {
 
     public PlaceDescription get(String name) {
         return this.places.get(name);
+    }
+
+    public void remove(String name) {
+        this.places.remove(name);
+    }
+
+    public void put(String key, PlaceDescription place) {
+        this.places.put(key, place);
     }
 }

@@ -41,10 +41,11 @@ public class PlaceDescription {
     private double elevation;
     private double latitude;
     private double longitude;
+    private String image;
 
     public PlaceDescription(
             String name, String description, String category, String address_title,
-            String address_street, double elevation, double latitude, double longitude) {
+            String address_street, double elevation, double latitude, double longitude, String image) {
         this.name = name;
         this.description = description;
         this.category = category;
@@ -53,6 +54,7 @@ public class PlaceDescription {
         this.elevation = elevation;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.image = image;
     }
 
     public PlaceDescription(JSONObject obj) throws Exception {
@@ -64,6 +66,7 @@ public class PlaceDescription {
         this.elevation = obj.getDouble("elevation");
         this.latitude = obj.getDouble("latitude");
         this.longitude = obj.getDouble("longitude");
+        this.image = obj.getString("image");
     }
 
     public double greatCircleDistance(PlaceDescription other) {
@@ -91,6 +94,7 @@ public class PlaceDescription {
             obj.put("elevation", this.elevation);
             obj.put("latitude", this.latitude);
             obj.put("longitude", this.longitude);
+            obj.put("image", this.image);
             return obj.toString(2);
         } catch (Exception err) {
             return err.toString();
@@ -161,4 +165,11 @@ public class PlaceDescription {
         this.latitude = latitude;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }
