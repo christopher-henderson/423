@@ -13,19 +13,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Select a place to modify it. The action bar '+' icon adds a place. The hiker icon compares places." />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button_view"
+        android:paddingTop="20dp"
         android:paddingBottom="10dp">
 
         <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/placeList"
-            android:layout_marginTop="10dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/placeList"
+        android:layout_marginTop="10dp" />
 
     </LinearLayout>
 </RelativeLayout>

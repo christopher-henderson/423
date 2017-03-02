@@ -24,7 +24,7 @@
 
 /*
  * @author Christoper Henderson mailto:chris@chenderson.org
- * @version January 18th, 2017
+ * @version February 10th, 2017
  */
 
 package assign3.cghende1.bsse.asu.edu.android;
@@ -69,18 +69,42 @@ public class PlaceDescription {
         this.image = obj.getString("image");
     }
 
+    public PlaceDescription(String obj) throws Exception {
+        this(new JSONObject(obj));
+    }
+
     public double greatCircleDistance(PlaceDescription other) {
-        return Math.atan(
-                Math.sqrt(
-                        Math.pow(Math.cos(other.getLatitude()) * Math.sin(this.longitude), 2) +
-                                Math.pow(Math.cos(this.latitude) * Math.sin(other.getLatitude()) -
-                                        Math.sin(this.latitude) * Math.cos(other.getLatitude()) * Math.cos(this.longitude) , 2)
-                )
-                        /
-                        (
-                                Math.sin(this.latitude) * Math.sin(other.getLatitude()) +
-                                        Math.cos(this.latitude) * Math.cos(other.getLatitude() * Math.cos(this.longitude)))
-        );
+//        var R = 6371e3; // metres
+//        var φ1 = lat1.toRadians();
+//        var φ2 = lat2.toRadians();
+//        var Δφ = (lat2-lat1).toRadians();
+//        var Δλ = (lon2-lon1).toRadians();
+//
+//        var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+//                Math.cos(φ1) * Math.cos(φ2) *
+//                        Math.sin(Δλ/2) * Math.sin(Δλ/2);
+//        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+//
+//        var d = R * c;
+        final double R = 6371e3;
+        final double φ1 = Math.toRadians(this.latitude);
+        final double φ2 = Math.toRadians(other.latitude);
+        final double Δφ = Math.toRadians(other.latitude - this.latitude);
+        final double Δλ = Math.toRadians(other.longitude - this.longitude);
+        final double a = Math.sin(Δφ / 2.0) * Math.sin(Δφ / 2.0) +
+                            Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2.0) *
+                                    Math.sin(Δλ / 2.0);
+        final double c = 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        // 0.000621371 Converts to miles.
+        return R * c * 0.000621371;
+    }
+
+    public double bearing(PlaceDescription other) {
+        double y = Math.sin(other.getLongitude()-this.getLongitude()) * Math.cos(other.getLatitude());
+        double x = Math.cos(this.getLatitude())*Math.sin(other.getLatitude()) -
+                Math.sin(this.getLatitude())*Math.cos(other.getLatitude())*Math.cos(other.getLongitude()-this.getLongitude());
+        android.util.Log.w("asd", Double.toString(x));
+        return Math.toDegrees(Math.atan2(y, x));
     }
 
     public String toJSON() {

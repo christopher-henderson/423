@@ -10,6 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="assign3.cghende1.bsse.asu.edu.android.add">
 
+    <TextView
+        android:text="Check button in action bar saves"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4" />
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +25,8 @@
         android:layout_marginStart="16dp"
         android:id="@+id/name"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:paddingTop="20dp"/>
 
     <EditText
         android:layout_width="wrap_content"

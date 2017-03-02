@@ -17,7 +17,8 @@
         </activity>
         <activity android:name=".modify" />
         <activity android:name=".compare" />
-        <activity android:name=".add"></activity>
+        <activity android:name=".add" />
+        <activity android:name=".ShowComparison"></activity>
     </application>
 
 </manifest>

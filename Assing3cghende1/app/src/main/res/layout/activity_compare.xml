@@ -10,4 +10,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="assign3.cghende1.bsse.asu.edu.android.compare">
 
+    <TextView
+        android:text="Select any two places to compare them."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_view"
+        android:paddingBottom="10dp">
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/placeList"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
 </RelativeLayout>

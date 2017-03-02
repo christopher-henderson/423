@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_action_add"
         android:title="add"
         app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/compare"
+        android:icon="@drawable/ic_action_compare"
+        android:title="compare"
+        app:showAsAction="ifRoom" />
 </menu>
