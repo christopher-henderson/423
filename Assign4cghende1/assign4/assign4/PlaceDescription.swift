@@ -24,13 +24,8 @@
 
 /*
  * @author Christoper Henderson mailto:chris@chenderson.org
- * @version January 18th, 2017
+ * @version March 3rd, 2017
  */
-
-//
-//  ViewController.swift
-//  Assignment1iOS
-//
 
 
 import Foundation
