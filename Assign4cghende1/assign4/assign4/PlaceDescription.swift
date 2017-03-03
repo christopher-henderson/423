@@ -45,6 +45,17 @@ class PlaceDescription {
     var latitude = 0.0
     var longitude = 0.0
     
+    init() {
+        self.name = "John Doe"
+        self.description = "No description available."
+        self.category = "N/A"
+        self.address_title = "N/A"
+        self.address_street = "N/A"
+        self.elevation = 0.0
+        self.latitude = 0.0
+        self.longitude = 0.0
+    }
+    
     init(name: String, description: String, category: String, address_title: String, address_street: String, elevation: Double, latitude: Double, longitude: Double) {
         self.name = name
         self.description = description

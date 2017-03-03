@@ -193,6 +193,8 @@ class PlaceLibrary : UITabBarController {
         ]
         ])
     
+    var selected = 0
+    
 //    init() {
 //        places = [PlaceDescription]()
 //        for (name, obj) in initialPlaces {
@@ -208,16 +210,24 @@ class PlaceLibrary : UITabBarController {
         return p
     }
     
+    func addPlace(_ place:PlaceDescription) {
+        self.places.insert(place, at: 0)
+    }
+    
     func count() -> Int {
         return self.places.count
     }
     
     func get(index i:Int) -> PlaceDescription {
-        return self.places[i]
+        if i < self.count() {
+            return self.places[i]
+        } else {
+            return PlaceDescription()
+        }
     }
     
-    func setName(index i:Int, name n: String) {
-        self.places[i].name = n
+    func deletePlace(index i:Int) {
+        self.places.remove(at: i)
     }
     
 }

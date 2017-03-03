@@ -10,7 +10,8 @@
 		8340F9701E677F290076CA10 /* PlaceDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8340F96F1E677F290076CA10 /* PlaceDescription.swift */; };
 		8340F9721E677F670076CA10 /* PlaceLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8340F9711E677F670076CA10 /* PlaceLibrary.swift */; };
 		8340F9741E6799CA0076CA10 /* Add.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8340F9731E6799CA0076CA10 /* Add.swift */; };
-		83AFDCDA1E5BADEB000A56DB /* Players.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AFDCD91E5BADEB000A56DB /* Players.swift */; };
+		8340F9761E6870E50076CA10 /* Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8340F9751E6870E50076CA10 /* Edit.swift */; };
+		837562B31E6905800065283C /* PlacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837562B21E6905800065283C /* PlacesTableViewController.swift */; };
 		83B23D171E5BA39B00FF7B8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B23D161E5BA39B00FF7B8B /* AppDelegate.swift */; };
 		83B23D191E5BA39B00FF7B8B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B23D181E5BA39B00FF7B8B /* ViewController.swift */; };
 		83B23D1C1E5BA39B00FF7B8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83B23D1A1E5BA39B00FF7B8B /* Main.storyboard */; };
@@ -42,7 +43,8 @@
 		8340F96F1E677F290076CA10 /* PlaceDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDescription.swift; sourceTree = "<group>"; };
 		8340F9711E677F670076CA10 /* PlaceLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceLibrary.swift; sourceTree = "<group>"; };
 		8340F9731E6799CA0076CA10 /* Add.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Add.swift; sourceTree = "<group>"; };
-		83AFDCD91E5BADEB000A56DB /* Players.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Players.swift; sourceTree = "<group>"; };
+		8340F9751E6870E50076CA10 /* Edit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Edit.swift; sourceTree = "<group>"; };
+		837562B21E6905800065283C /* PlacesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesTableViewController.swift; sourceTree = "<group>"; };
 		83B23D131E5BA39B00FF7B8B /* assign4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = assign4.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83B23D161E5BA39B00FF7B8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83B23D181E5BA39B00FF7B8B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -114,10 +116,11 @@
 				83B23D1D1E5BA39B00FF7B8B /* Assets.xcassets */,
 				83B23D1F1E5BA39B00FF7B8B /* LaunchScreen.storyboard */,
 				83B23D221E5BA39B00FF7B8B /* Info.plist */,
-				83AFDCD91E5BADEB000A56DB /* Players.swift */,
 				8340F96F1E677F290076CA10 /* PlaceDescription.swift */,
 				8340F9711E677F670076CA10 /* PlaceLibrary.swift */,
 				8340F9731E6799CA0076CA10 /* Add.swift */,
+				8340F9751E6870E50076CA10 /* Edit.swift */,
+				837562B21E6905800065283C /* PlacesTableViewController.swift */,
 			);
 			path = assign4;
 			sourceTree = "<group>";
@@ -275,12 +278,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				83B23D471E5BAB9200FF7B8B /* Player.swift in Sources */,
-				83AFDCDA1E5BADEB000A56DB /* Players.swift in Sources */,
 				8340F9741E6799CA0076CA10 /* Add.swift in Sources */,
+				8340F9761E6870E50076CA10 /* Edit.swift in Sources */,
 				8340F9701E677F290076CA10 /* PlaceDescription.swift in Sources */,
 				8340F9721E677F670076CA10 /* PlaceLibrary.swift in Sources */,
 				83B23D191E5BA39B00FF7B8B /* ViewController.swift in Sources */,
 				83B23D171E5BA39B00FF7B8B /* AppDelegate.swift in Sources */,
+				837562B31E6905800065283C /* PlacesTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

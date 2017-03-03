@@ -1,39 +1,56 @@
 //
-//  Add.swift
+//  Edit.swift
 //  assign4
 //
-//  Created by Christopher Henderson on 3/1/17.
+//  Created by Christopher Henderson on 3/2/17.
 //  Copyright © 2017 Christopher Henderson. All rights reserved.
 //
 
 import UIKit
 
-class Add: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-    @IBOutlet weak var name: UITextField!
+class Edit: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    @IBOutlet weak var placeDescription: UITextField!
-    @IBOutlet weak var longitude: UITextField!
-    @IBOutlet weak var elevation: UITextField!
-    @IBOutlet weak var latitude: UITextField!
-    @IBOutlet weak var address_street: UITextField!
-    @IBOutlet weak var address_title: UITextField!
     @IBOutlet weak var save: UIButton!
     @IBOutlet weak var picker: UIPickerView!
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var address_street: UITextField!
+    @IBOutlet weak var longitude: UITextField!
+    @IBOutlet weak var latitude: UITextField!
+    @IBOutlet weak var elevation: UITextField!
+    @IBOutlet weak var address_title: UITextField!
+    @IBOutlet weak var placeDescription: UITextField!
+    @IBOutlet weak var name: UITextField!
     
     var pickerData: [String] = ["Hike", "Travel", "Home", "School", "Business", "Government"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let controller:PlaceLibrary = self.tabBarController as! PlaceLibrary
-//        label.text = controller.get(index: 0).name
-//        controller.get(index: 0).name = "JOE"
-        self.picker.dataSource = self;
-        self.picker.delegate = self;
+        // Do any additional setup after loading the view.
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let controller:PlaceLibrary = self.tabBarController as! PlaceLibrary
+        let place = controller.get(index: controller.selected)
+        self.name.text = place.name
+        self.latitude.text = String(place.latitude)
+        self.longitude.text = String(place.longitude)
+        self.elevation.text = String(place.elevation)
+        self.address_street.text = place.address_street
+        self.address_title.text = place.address_title
+        self.placeDescription.text = place.description
+        self.picker.dataSource = self;
+        self.picker.delegate = self;
+        for (index, category) in self.pickerData.enumerated() {
+            if place.category == category {
+                self.picker.selectRow(index, inComponent: 0, animated: true)
+            }
+        }
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -47,8 +64,8 @@ class Add: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return self.pickerData[row]
     }
-    
-    @IBAction func savePlace(_ sender: UIButton) {
+
+    @IBAction func save(_ sender: Any) {
         let elevation = Double(self.elevation.text!)
         let latitude = Double(self.latitude.text!)
         let longitude = Double(self.longitude.text!)
@@ -63,7 +80,15 @@ class Add: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         }
         let category = self.pickerData[self.picker.selectedRow(inComponent: 0)]
         let controller:PlaceLibrary = self.tabBarController as! PlaceLibrary
-        controller.addPlace(PlaceDescription(name: self.name.text!, description: self.placeDescription.text!, category: category, address_title: self.address_title.text!, address_street: self.address_street.text!, elevation: elevation!, latitude: latitude!, longitude: longitude!))
+        let place = controller.get(index: controller.selected)
+        place.name = self.name.text!
+        place.description = self.placeDescription.text!
+        place.category = category
+        place.address_title = self.address_title.text!
+        place.address_street = self.address_street.text!
+        place.elevation = elevation!
+        place.latitude = latitude!
+        place.longitude = longitude!
         self.tabBarController?.selectedIndex = 0
     }
     
