@@ -19,7 +19,6 @@
 		83B23D211E5BA39B00FF7B8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83B23D1F1E5BA39B00FF7B8B /* LaunchScreen.storyboard */; };
 		83B23D2C1E5BA39B00FF7B8B /* assign4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B23D2B1E5BA39B00FF7B8B /* assign4Tests.swift */; };
 		83B23D371E5BA39B00FF7B8B /* assign4UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B23D361E5BA39B00FF7B8B /* assign4UITests.swift */; };
-		83B23D471E5BAB9200FF7B8B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B23D461E5BAB9200FF7B8B /* Player.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +57,6 @@
 		83B23D321E5BA39B00FF7B8B /* assign4UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = assign4UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		83B23D361E5BA39B00FF7B8B /* assign4UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = assign4UITests.swift; sourceTree = "<group>"; };
 		83B23D381E5BA39B00FF7B8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		83B23D461E5BAB9200FF7B8B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +87,6 @@
 		83B23D0A1E5BA39B00FF7B8B = {
 			isa = PBXGroup;
 			children = (
-				83B23D461E5BAB9200FF7B8B /* Player.swift */,
 				83B23D151E5BA39B00FF7B8B /* assign4 */,
 				83B23D2A1E5BA39B00FF7B8B /* assign4Tests */,
 				83B23D351E5BA39B00FF7B8B /* assign4UITests */,
@@ -277,7 +274,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83B23D471E5BAB9200FF7B8B /* Player.swift in Sources */,
 				8340F9741E6799CA0076CA10 /* Add.swift in Sources */,
 				8340F9761E6870E50076CA10 /* Edit.swift in Sources */,
 				8340F9701E677F290076CA10 /* PlaceDescription.swift in Sources */,
