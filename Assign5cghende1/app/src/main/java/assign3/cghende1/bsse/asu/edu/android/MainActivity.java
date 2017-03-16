@@ -101,8 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void init() {
-        APiBindings bindings = new APiBindings();
-        bindings.execute(this);
+        new GetLibrary().execute(this);
     }
 
     protected void initFromIntent() {

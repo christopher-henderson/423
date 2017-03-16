@@ -1,7 +1,5 @@
 package assign3.cghende1.bsse.asu.edu.android;
 
-import android.os.AsyncTask;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -18,33 +16,16 @@ import java.net.URL;
  * Created by chris on 3/13/17.
  */
 
-public class APiBindings extends AsyncTask {
+public class APIBindings {
 
-    MainActivity main;
-
-    @Override
-    protected PlaceLibrary doInBackground(Object ... params) {
-        android.util.Log.w("Hello", "Getting things");
-        this.main = (MainActivity) params[0];
-        String placeNames = this.performRequest("{ \"jsonrpc\": \"2.0\", \"method\": \"getNames\", \"params\": [ ], \"id\": 3}");
-        PlaceLibrary library = this.getPlaceLibrary(placeNames);
-        return library;
-    }
-
-    @Override
-    protected void onPostExecute(Object result) {
-        PlaceLibrary library = (PlaceLibrary) result;
-        main.initListView(library);
-    }
-
-    public PlaceLibrary getPlaceLibrary(String result) {
+    public static PlaceLibrary getPlaceLibrary(String result) {
         PlaceLibrary library = new PlaceLibrary();
         try {
             JSONObject places = (JSONObject) new JSONTokener((String)result).nextValue();
             JSONArray placeNames = places.getJSONArray("result");
             for (int index = 0; index < placeNames.length(); index++) {
                 String name = placeNames.getString(index);
-                library.put(name, this.getPlace(name));
+                library.put(name, getPlace(name));
             }
         } catch (Exception e) {
             android.util.Log.w("Darn the luck", "DARN!");
@@ -53,9 +34,9 @@ public class APiBindings extends AsyncTask {
         return library;
     }
 
-    public PlaceDescription getPlace(String name) {
+    public static PlaceDescription getPlace(String name) {
         String request = String.format("{ \"jsonrpc\": \"2.0\", \"method\": \"get\", \"params\": [\"%s\"], \"id\": 3}", name);
-        String response = this.performRequest(request);
+        String response = performRequest(request);
         PlaceDescription place = null;
         JSONObject obj;
         try {
@@ -73,7 +54,7 @@ public class APiBindings extends AsyncTask {
         return place;
     }
 
-    public String performRequest(String request) {
+    public static String performRequest(String request) {
         StringBuilder outputBuilder = new StringBuilder();
         HttpURLConnection connection = null;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -111,3 +92,4 @@ public class APiBindings extends AsyncTask {
         }
     }
 }
+
