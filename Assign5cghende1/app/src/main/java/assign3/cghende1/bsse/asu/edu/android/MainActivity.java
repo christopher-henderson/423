@@ -40,15 +40,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import static assign3.cghende1.bsse.asu.edu.android.R.raw.places;
-
 public class MainActivity extends AppCompatActivity {
 
     PlaceLibrary placeLibrary;
@@ -61,15 +52,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.placeList = (ListView) findViewById(R.id.placeList);
-        if (this.firstOnCreate) {
-            this.init();
-            this.firstOnCreate = false;
-        } else {
-            this.initFromIntent();
-        }
-        this.initListView();
-        APiBindings bindgings = new APiBindings();
-        bindgings.execute(this);
+        android.util.Log.w("STARTING", "fo reelz");
+        this.init();
+//        if (this.firstOnCreate) {
+//            this.init();
+//            this.firstOnCreate = false;
+//        } else {
+//            this.initFromIntent();
+//        }
     }
 
         /*
@@ -111,23 +101,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void init() {
-        InputStream is = this.getApplicationContext().getResources().openRawResource(places);
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        String placesString = "";
-        try {
-            for (String line = br.readLine(); line != null; line = br.readLine()) {
-                placesString = placesString + line;
-            }
-        } catch (Exception ex) {
-            android.util.Log.w("nope", ex);
-        }
-        try {
-
-            JSONObject places = (JSONObject) new JSONTokener(placesString).nextValue();
-            this.placeLibrary = new PlaceLibrary(places);
-        } catch (Exception ex) {
-            android.util.Log.w("Darn", ex);
-        }
+        APiBindings bindings = new APiBindings();
+        bindings.execute(this);
     }
 
     protected void initFromIntent() {
@@ -137,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
         this.placeList.setAdapter(adapter);
     }
 
-    protected void initListView() {
+    protected void initListView(PlaceLibrary library) {
+        this.placeLibrary = library;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, this.placeLibrary.keys());
         this.placeList.setAdapter(adapter);
         final MainActivity self = this;

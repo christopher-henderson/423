@@ -45,6 +45,10 @@ import java.util.List;
 public class PlaceLibrary extends Application {
     HashMap<String, PlaceDescription> places;
 
+    PlaceLibrary() {
+        this.places = new HashMap<String, PlaceDescription>();
+    }
+
     PlaceLibrary(JSONObject places) {
         this.places = new HashMap<String, PlaceDescription>();
         Iterator<String> keys = places.keys();
