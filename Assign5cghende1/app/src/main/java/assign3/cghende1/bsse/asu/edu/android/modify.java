@@ -35,7 +35,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
-public class modify extends AppCompatActivity {
+public class modify extends AppCompatActivity implements Saver {
 
     PlaceLibrary placeLibrary;
     PlaceDescription place;
@@ -79,7 +79,7 @@ public class modify extends AppCompatActivity {
         EditText description = (EditText) findViewById(R.id.description);
         EditText image = (EditText) findViewById(R.id.image);
 
-        this.placeLibrary.remove(this.place.getName());
+//        this.placeLibrary.remove(this.place.getName());
 
         this.place.setName(name.getText().toString());
         this.place.setAddress_title(address_title.getText().toString());
@@ -91,17 +91,16 @@ public class modify extends AppCompatActivity {
         this.place.setDescription(description.getText().toString());
         this.place.setImage(image.getText().toString());
 
-        this.placeLibrary.put(this.place.getName(), this.place);
+//        this.placeLibrary.put(this.place.getName(), this.place);
+        new SavePlace().execute(this, this.place);
+    }
 
+    public void doneSaving() {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("places", this.placeLibrary.toJSON());
         startActivity(intent);
     }
 
     public void delete(View v) {
-        this.placeLibrary.remove(this.place.getName());
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("places", this.placeLibrary.toJSON());
-        startActivity(intent);
+        new RemovePlace().execute(this, this.place);
     }
 }

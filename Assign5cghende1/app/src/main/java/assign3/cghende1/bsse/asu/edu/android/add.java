@@ -38,7 +38,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.app.AlertDialog;
 
-public class add extends AppCompatActivity {
+public class add extends AppCompatActivity implements Saver {
 
     PlaceLibrary placeLibrary;
     PlaceDescription place;
@@ -83,10 +83,13 @@ public class add extends AppCompatActivity {
             return;
         }
 
-        this.placeLibrary.put(this.place.getName(), this.place);
+        new SavePlace().execute(this, this.place);
 
+
+    }
+
+    public void doneSaving() {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("places", this.placeLibrary.toJSON());
         startActivity(intent);
     }
 

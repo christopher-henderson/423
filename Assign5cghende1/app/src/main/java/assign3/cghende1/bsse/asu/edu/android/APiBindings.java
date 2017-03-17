@@ -54,6 +54,12 @@ public class APIBindings {
         return place;
     }
 
+    public static void savePlaceDescription(PlaceDescription place) {
+        JSONObject obj = new JSONObject();
+        String request = String.format("{ \"jsonrpc\": \"2.0\", \"method\": \"add\", \"params\": [%s], \"id\": 3}", place.toJSON());
+        performRequest(request);
+    }
+
     public static String performRequest(String request) {
         StringBuilder outputBuilder = new StringBuilder();
         HttpURLConnection connection = null;
