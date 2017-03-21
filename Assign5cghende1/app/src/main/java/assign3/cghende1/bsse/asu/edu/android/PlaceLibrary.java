@@ -24,7 +24,7 @@
 
 /*
  * @author Christoper Henderson mailto:chris@chenderson.org
- * @version February 10th, 2017
+ * @version March 21st, 2017
  */
 
 package assign3.cghende1.bsse.asu.edu.android;
@@ -37,10 +37,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
-/**
- * Created by chris on 2/6/17.
- */
 
 public class PlaceLibrary extends Application {
     HashMap<String, PlaceDescription> places;

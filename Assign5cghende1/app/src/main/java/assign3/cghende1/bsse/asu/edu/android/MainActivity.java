@@ -24,7 +24,7 @@
 
 /*
  * @author Christoper Henderson mailto:chris@chenderson.org
- * @version February 10th, 2017
+ * @version March 21st, 2017
  */
 
 package assign3.cghende1.bsse.asu.edu.android;
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     PlaceLibrary placeLibrary;
     ListView placeList;
+    Menu menu;
 
     static boolean firstOnCreate = true;
 
@@ -52,17 +53,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.placeList = (ListView) findViewById(R.id.placeList);
-        android.util.Log.w("STARTING", "fo reelz");
         this.init();
-//        if (this.firstOnCreate) {
-//            this.init();
-//            this.firstOnCreate = false;
-//        } else {
-//            this.initFromIntent();
-//        }
     }
 
-        /*
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu) {
+        menu.getItem(0).setEnabled(false);
+        menu.getItem(1).setEnabled(false);
+        this.menu = menu;
+        return true;
+    }
+
+    /*
      * One way to create Aciton Bar Buttons is to use xml menu specification. Create the file:
      * res/menu/main_activity_actions.xml to include contents as in this project.
      * reference to any images for the action bar should be created by right clicking on res folder
@@ -126,5 +128,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        if (this.menu != null) {
+            this.menu.getItem(0).setEnabled(true);
+            this.menu.getItem(1).setEnabled(true);
+        }
     }
 }

@@ -12,10 +12,10 @@ public class RemovePlace extends AsyncTask {
 
     @Override
     public String doInBackground(Object ... params) {
-        modifyActivity = (modify) params[0];
+        this.modifyActivity = (modify) params[0];
         PlaceDescription place = (PlaceDescription) params[1];
         String request = String.format("{ \"jsonrpc\": \"2.0\", \"method\": \"remove\", \"params\": [\"%s\"], \"id\": 3}", place.getName());
-        APIBindings.performRequest(request);
+        APIBindings.performRequest(request, this.modifyActivity);
         return null;
     }
 
