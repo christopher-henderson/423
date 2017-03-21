@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.placeList = (ListView) findViewById(R.id.placeList);
+        this.placeList.setVisibility(View.GONE);
         this.init();
     }
 
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void initListView(PlaceLibrary library) {
+        findViewById(R.id.progressBar).setVisibility(View.GONE);
         this.placeLibrary = library;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, this.placeLibrary.keys());
         this.placeList.setAdapter(adapter);
@@ -132,5 +134,6 @@ public class MainActivity extends AppCompatActivity {
             this.menu.getItem(0).setEnabled(true);
             this.menu.getItem(1).setEnabled(true);
         }
+        this.placeList.setVisibility(View.VISIBLE);
     }
 }
