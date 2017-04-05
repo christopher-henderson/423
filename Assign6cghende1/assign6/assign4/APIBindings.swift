@@ -11,7 +11,16 @@ import Foundation
 
 class APIBindings {
     
-    var endpoint = "http://localhost:8080/"
+    static var endpoint = APIBindings.getURL()
+
+    class func getURL() -> String {
+        if let infoPlist = Bundle.main.infoDictionary {
+            return ((infoPlist["ServerURLString"]) as?  String!)!
+        } else {
+            NSLog("error getting urlString from info.plist")
+            return ""
+        }
+    }
 
     class func getPlaces(completion: @escaping ([PlaceDescription]) -> Void, done: @escaping () -> Void) {
         APIBindings.getNames(completion: {(data: String, _: String?) -> Void in
@@ -41,22 +50,22 @@ class APIBindings {
     
     class func getPlace(name: String) -> String {
         let data = "{ \"jsonrpc\": \"2.0\", \"method\": \"get\", \"params\": [\"\(name)\"], \"id\": 3}".data(using: .utf8)!
-        return syncHttpPostJSON(url: "http://localhost:8080/", data: data)
+        return syncHttpPostJSON(url: APIBindings.endpoint, data: data)
     }
     
     class func getNames(completion: @escaping (String, String?) -> Void) {
         let data = "{ \"jsonrpc\": \"2.0\", \"method\": \"getNames\", \"params\": [ ], \"id\": 3}".data(using: .utf8)!
-        asyncHttpPostJSON(url: "http://localhost:8080/", data: data, completion: completion)
+        asyncHttpPostJSON(url: APIBindings.endpoint, data: data, completion: completion)
     };
     
     class func addPlace(place: PlaceDescription, completion: @escaping () -> Void) {
         let data = "{ \"jsonrpc\": \"2.0\", \"method\": \"add\", \"params\": [{\"address-title\":\"\(place.address_title)\",\"address-street\":\"\(place.address_street)\",\"elevation\":\(place.elevation),\"image\":\"asupoly\",\"latitude\":\(place.latitude),\"longitude\":\(place.longitude),\"name\":\"\(place.name)\",\"description\":\"\(place.description)\",\"category\":\"\(place.description)\"}], \"id\": 3}".data(using: .utf8)!
-        asyncHttpPostJSON(url: "http://localhost:8080/", data: data, completion: completion)
+        asyncHttpPostJSON(url: APIBindings.endpoint, data: data, completion: completion)
     }
     
     class func deletePlace(name: String, completion: @escaping () -> Void) {
         let data = "{ \"jsonrpc\": \"2.0\", \"method\": \"remove\", \"params\": [\"\(name)\"], \"id\": 3}".data(using: .utf8)!
-        asyncHttpPostJSON(url: "http://localhost:8080/", data: data, completion: completion)
+        asyncHttpPostJSON(url: APIBindings.endpoint, data: data, completion: completion)
     }
     
     class func syncHttpPostJSON(url: String, data: Data) -> String {
