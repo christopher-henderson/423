@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.io.File;
@@ -27,6 +26,8 @@ public class Database extends SQLiteOpenHelper {
     private SQLiteDatabase routeDB;
     private final Context context;
 
+    private static boolean created = false;
+
     public Database(Context context){
         super(context,dbName, null, DATABASE_VERSION);
         this.context = context;
@@ -37,74 +38,43 @@ public class Database extends SQLiteOpenHelper {
     public PlaceLibrary getLibrary() {
         PlaceLibrary placeLibrary = new PlaceLibrary();
         SQLiteDatabase cursor = this.openDB();
-        Cursor cur = cursor.rawQuery("select * from Places", new String[]{});
-        while (cur.moveToNext()) {
-            PlaceDescription place = new PlaceDescription(cur);
-            placeLibrary.put(place.getName(), place);
+        cursor.beginTransaction();
+        try {
+            Cursor cur = cursor.rawQuery("select * from Places", new String[]{});
+            while (cur.moveToNext()) {
+                PlaceDescription place = new PlaceDescription(cur);
+                placeLibrary.put(place.getName(), place);
+            }
+            cur.close();
+            cursor.setTransactionSuccessful();
+        } finally {
+            cursor.endTransaction();
+            cursor.close();
         }
-        cur.close();
         return placeLibrary;
     }
 
     public PlaceDescription getPlace(long ID) {
         PlaceDescription place = null;
         SQLiteDatabase cursor = this.openDB();
-        Cursor cur = cursor.rawQuery("select * from Places where id = ?", new String[]{new Long(ID).toString()});
-        if (cur.moveToNext()) {
-            place = new PlaceDescription(cur);
+        cursor.beginTransaction();
+        try {
+            Cursor cur = cursor.rawQuery("select * from Places where id = ?", new String[]{new Long(ID).toString()});
+            if (cur.moveToNext()) {
+                place = new PlaceDescription(cur);
+            }
+            cur.close();
+            cursor.setTransactionSuccessful();
+        } finally {
+            cursor.endTransaction();
+            cursor.close();
         }
-        cur.close();
         return place;
     }
 
     public void updatePlace(PlaceDescription place) {
         SQLiteDatabase cursor = this.openDB();
-        String query = "UPDATE Places SET name = ? description = ?, category = ?, address_title = ?, address_street = ?, elevation = ?, longitude = ?, latitude = ?, image = ? WHERE id = ?";
-        Cursor cur = cursor.rawQuery(query, new String[]{
-                place.getName(),
-                place.getDescription(),
-                place.getCategory(),
-                place.getAddress_title(),
-                place.getAddress_street(),
-                new Double(place.getElevation()).toString(),
-                new Double(place.getLongitude()).toString(),
-                new Double(place.getLatitude()).toString(),
-                place.getImage(),
-                new Integer(place.getID()).toString()
-        });
-    }
-
-    //        String query = "INSERT INTO Places (name, description, category, address_title, address_street, elevation, longitude, latitude, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-//        String query = String.format("INSERT INTO Places (name, description, category, address_title, address_street, elevation, longitude, latitude, image) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-//                place.getName(),
-//                place.getDescription(),
-//                place.getCategory(),
-//                place.getAddress_title(),
-//                place.getAddress_street(),
-//                new Double(place.getElevation()).toString(),
-//                new Double(place.getLongitude()).toString(),
-//                new Double(place.getLatitude()).toString(),
-//                place.getImage()
-//        );
-//        Cursor cur = cursor.rawQuery(query, new String[]{
-//                place.getName(),
-//                place.getDescription(),
-//                place.getCategory(),
-//                place.getAddress_title(),
-//                place.getAddress_street(),
-//                new Double(place.getElevation()).toString(),
-//                new Double(place.getLongitude()).toString(),
-//                new Double(place.getLatitude()).toString(),
-//                place.getImage()
-//        });
-//        cursor.execSQL(query);
-
-
-    public void insertPlace(PlaceDescription place) {
-        android.util.Log.w("hello", "from saving");
-        SQLiteDatabase cursor = this.openDB();
-
-        SQLiteDatabase cursor = this.getWritableDatabase();
+        cursor.beginTransaction();
         ContentValues cvs = new ContentValues();
         cvs.put("name", place.getName());
         cvs.put("description", place.getDescription());
@@ -115,16 +85,64 @@ public class Database extends SQLiteOpenHelper {
         cvs.put("longitude", place.getLongitude());
         cvs.put("latitude", place.getLatitude());
         cvs.put("image", place.getImage());
-        long id = cursor.insertOrThrow("Places", null, cvs);
-        cursor.close();
-        PlaceDescription newPlace = this.getPlace(id);
-        android.util.Log.w("add/save", newPlace.getName());
+        try {
+            cursor.update("Places", cvs, "id = ?", new String[]{new Integer(place.getID()).toString()});
+//            String query = "UPDATE Places SET name = ?, description = ?, category = ?, address_title = ?, address_street = ?, elevation = ?, longitude = ?, latitude = ?, image = ? WHERE id = ?";
+//            Cursor cur = cursor.rawQuery(query, new String[]{
+//                    place.getName(),
+//                    place.getDescription(),
+//                    place.getCategory(),
+//                    place.getAddress_title(),
+//                    place.getAddress_street(),
+//                    new Double(place.getElevation()).toString(),
+//                    new Double(place.getLongitude()).toString(),
+//                    new Double(place.getLatitude()).toString(),
+//                    place.getImage(),
+//                    new Integer(place.getID()).toString()
+//            });
+            cursor.setTransactionSuccessful();
+        } finally {
+            cursor.endTransaction();
+            cursor.close();
+        }
+    }
+
+    public void insertPlace(PlaceDescription place) {
+        android.util.Log.w("hello", "from saving");
+
+        SQLiteDatabase cursor = this.openDB();
+        cursor.beginTransaction();
+        ContentValues cvs = new ContentValues();
+        cvs.put("name", place.getName());
+        cvs.put("description", place.getDescription());
+        cvs.put("category", place.getCategory());
+        cvs.put("address_title", place.getAddress_title());
+        cvs.put("address_street", place.getAddress_street());
+        cvs.put("elevation", place.getElevation());
+        cvs.put("longitude", place.getLongitude());
+        cvs.put("latitude", place.getLatitude());
+        cvs.put("image", place.getImage());
+        try {
+            cursor.insertOrThrow("Places", null, cvs);
+            cursor.setTransactionSuccessful();
+        } finally {
+            cursor.endTransaction();
+            cursor.close();
+        }
+
     }
 
     public void deletePlace(PlaceDescription place) {
+        android.util.Log.w("seriously", "the heck");
         SQLiteDatabase cursor = this.openDB();
-        String query = "DELETE FROM Places WHERE ID = ?";
-        cursor.rawQuery(query, new String[]{new Integer(place.getID()).toString()});
+        cursor.beginTransaction();
+        try {
+            cursor.delete("Places", "id = ?", new String[]{new Integer(place.getID()).toString()});
+            cursor.setTransactionSuccessful();
+        } finally {
+            cursor.endTransaction();
+            cursor.close();
+        }
     }
 
     public void createDB() throws IOException {
@@ -145,53 +163,54 @@ public class Database extends SQLiteOpenHelper {
      * @return false if the database file needs to be copied from the assets directory, true
      * otherwise.
      */
-    private boolean checkDB(){    //does the database exist and is it initialized?
-        SQLiteDatabase checkDB = null;
-        boolean ret = false;
-        try{
-            String path = dbPath + dbName + ".db";
-            debug("RouteDB --> checkDB: path to db is", path);
-            File aFile = new File(path);
-            if(aFile.exists()){
-                checkDB = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READWRITE);
-                if (checkDB!=null) {
-                    debug("RouteDB --> checkDB","opened db at: "+checkDB.getPath());
-                    Cursor tabChk = checkDB.rawQuery("SELECT name FROM sqlite_master where type='table' and name='course';", null);
-                    boolean crsTabExists = false;
-                    if(tabChk == null){
-                        debug("RouteDB --> checkDB","check for course table result set is null");
-                    }else{
-                        tabChk.moveToNext();
-                        debug("RouteDB --> checkDB","check for course table result set is: " +
-                                ((tabChk.isAfterLast() ? "empty" : (String) tabChk.getString(0))));
-                        crsTabExists = !tabChk.isAfterLast();
-                    }
-                    if(crsTabExists){
-                        Cursor c= checkDB.rawQuery("SELECT * FROM course", null);
-                        c.moveToFirst();
-                        while(! c.isAfterLast()) {
-                            String crsName = c.getString(0);
-                            int crsid = c.getInt(1);
-                            debug("RouteDB --> checkDB","Course table has CourseName: "+
-                                    crsName+"\tCourseID: "+crsid);
-                            c.moveToNext();
-                        }
-                        ret = true;
-                    }
-                }
-            }
-        }catch(SQLiteException e){
-            android.util.Log.w("RouteDB->checkDB",e.getMessage());
-        }
-        if(checkDB != null){
-            checkDB.close();
-        }
-        return ret;
-    }
+//    private boolean checkDB(){    //does the database exist and is it initialized?
+//        SQLiteDatabase checkDB = null;
+//        boolean ret = false;
+//        try{
+//            String path = dbPath + dbName + ".db";
+//            debug("RouteDB --> checkDB: path to db is", path);
+//            File aFile = new File(path);
+//            if(aFile.exists()){
+//                checkDB = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READWRITE);
+//                if (checkDB!=null) {
+//                    debug("RouteDB --> checkDB","opened db at: "+checkDB.getPath());
+//                    Cursor tabChk = checkDB.rawQuery("SELECT name FROM sqlite_master where type='table' and name='course';", null);
+//                    boolean crsTabExists = false;
+//                    if(tabChk == null){
+//                        debug("RouteDB --> checkDB","check for course table result set is null");
+//                    }else{
+//                        tabChk.moveToNext();
+//                        debug("RouteDB --> checkDB","check for course table result set is: " +
+//                                ((tabChk.isAfterLast() ? "empty" : (String) tabChk.getString(0))));
+//                        crsTabExists = !tabChk.isAfterLast();
+//                    }
+//                    if(crsTabExists){
+//                        Cursor c= checkDB.rawQuery("SELECT * FROM course", null);
+//                        c.moveToFirst();
+//                        while(! c.isAfterLast()) {
+//                            String crsName = c.getString(0);
+//                            int crsid = c.getInt(1);
+//                            debug("RouteDB --> checkDB","Course table has CourseName: "+
+//                                    crsName+"\tCourseID: "+crsid);
+//                            c.moveToNext();
+//                        }
+//                        ret = true;
+//                    }
+//                }
+//            }
+//        }catch(SQLiteException e){
+//            android.util.Log.w("RouteDB->checkDB",e.getMessage());
+//        }
+//        if(checkDB != null){
+//            checkDB.close();
+//        }
+//        return ret;
+//    }
 
     public void copyDB() throws IOException{
         try {
-            if(!checkDB()){
+            if(!created){
+                android.util.Log.w("ASDADGASD", "WHARRGGGGLE");
                 // only copy the database if it doesn't already exist in my database directory
                 debug("RouteDB --> copyDB", "checkDB returned false, starting copy");
                 InputStream ip =  context.getResources().openRawResource(R.raw.routes);
@@ -218,12 +237,13 @@ public class Database extends SQLiteOpenHelper {
 
     public SQLiteDatabase openDB() throws SQLException {
         String myPath = dbPath + dbName + ".db";
-        if(checkDB()) {
+        if(created) {
             routeDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
             debug("CourseDB --> openDB", "opened db at path: " + routeDB.getPath());
         }else{
             try {
                 this.copyDB();
+                created = true;
                 routeDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
             }catch(Exception ex) {
                 android.util.Log.w(this.getClass().getSimpleName(),"unable to copy and open db: "+ex.getMessage());

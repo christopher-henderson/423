@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.placeList = (ListView) findViewById(R.id.placeList);
+        android.util.Log.w("asdasd", "main");
         this.init();
         this.initListView();
     }
@@ -108,13 +109,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    protected void initFromIntent() {
-//        Intent intent = getIntent();
-//        this.placeLibrary = new PlaceLibrary(intent.getStringExtra("places"));
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, this.placeLibrary.keys());
-//        this.placeList.setAdapter(adapter);
-//    }
-
     protected void initListView() {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, this.placeLibrary.keys());
         this.placeList.setAdapter(adapter);
@@ -124,8 +118,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapter, View v, int position, long something){
                 String name = (String) adapter.getItemAtPosition(position);
                 Intent intent = new Intent(self, modify.class);
-                intent.putExtra("places", self.placeLibrary.toJSON());
-                intent.putExtra("place", name);
+                intent.putExtra("place", self.placeLibrary.get(name).getID());
                 startActivity(intent);
             }
         });

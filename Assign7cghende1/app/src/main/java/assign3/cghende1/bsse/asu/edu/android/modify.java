@@ -54,6 +54,8 @@ public class modify extends AppCompatActivity {
         EditText description = (EditText) findViewById(R.id.description);
         EditText image = (EditText) findViewById(R.id.image);
 
+        this.place = new Database(this).getPlace(intent.getIntExtra("place", 0));
+
         name.setText(this.place.getName());
         address_title.setText(this.place.getAddress_title());
         address_street.setText(this.place.getAddress_street());
