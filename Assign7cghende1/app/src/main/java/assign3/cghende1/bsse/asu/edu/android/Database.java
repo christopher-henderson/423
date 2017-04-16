@@ -21,7 +21,7 @@ public class Database extends SQLiteOpenHelper {
 
     private static final boolean debugon = false;
     private static final int DATABASE_VERSION = 3;
-    private static String dbName = "routes";
+    private static String dbName = "places";
     private String dbPath;
     private SQLiteDatabase routeDB;
     private final Context context;
@@ -87,19 +87,6 @@ public class Database extends SQLiteOpenHelper {
         cvs.put("image", place.getImage());
         try {
             cursor.update("Places", cvs, "id = ?", new String[]{new Integer(place.getID()).toString()});
-//            String query = "UPDATE Places SET name = ?, description = ?, category = ?, address_title = ?, address_street = ?, elevation = ?, longitude = ?, latitude = ?, image = ? WHERE id = ?";
-//            Cursor cur = cursor.rawQuery(query, new String[]{
-//                    place.getName(),
-//                    place.getDescription(),
-//                    place.getCategory(),
-//                    place.getAddress_title(),
-//                    place.getAddress_street(),
-//                    new Double(place.getElevation()).toString(),
-//                    new Double(place.getLongitude()).toString(),
-//                    new Double(place.getLatitude()).toString(),
-//                    place.getImage(),
-//                    new Integer(place.getID()).toString()
-//            });
             cursor.setTransactionSuccessful();
         } finally {
             cursor.endTransaction();
@@ -155,65 +142,13 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    /**
-     * Does the database exist and has it been initialized? This method determines whether
-     * the database needs to be copied to the data/data/pkgName/files directory by
-     * checking whether the file exists. If it does it checks to see whether the db is
-     * uninitialized or whether it has the course table.
-     * @return false if the database file needs to be copied from the assets directory, true
-     * otherwise.
-     */
-//    private boolean checkDB(){    //does the database exist and is it initialized?
-//        SQLiteDatabase checkDB = null;
-//        boolean ret = false;
-//        try{
-//            String path = dbPath + dbName + ".db";
-//            debug("RouteDB --> checkDB: path to db is", path);
-//            File aFile = new File(path);
-//            if(aFile.exists()){
-//                checkDB = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READWRITE);
-//                if (checkDB!=null) {
-//                    debug("RouteDB --> checkDB","opened db at: "+checkDB.getPath());
-//                    Cursor tabChk = checkDB.rawQuery("SELECT name FROM sqlite_master where type='table' and name='course';", null);
-//                    boolean crsTabExists = false;
-//                    if(tabChk == null){
-//                        debug("RouteDB --> checkDB","check for course table result set is null");
-//                    }else{
-//                        tabChk.moveToNext();
-//                        debug("RouteDB --> checkDB","check for course table result set is: " +
-//                                ((tabChk.isAfterLast() ? "empty" : (String) tabChk.getString(0))));
-//                        crsTabExists = !tabChk.isAfterLast();
-//                    }
-//                    if(crsTabExists){
-//                        Cursor c= checkDB.rawQuery("SELECT * FROM course", null);
-//                        c.moveToFirst();
-//                        while(! c.isAfterLast()) {
-//                            String crsName = c.getString(0);
-//                            int crsid = c.getInt(1);
-//                            debug("RouteDB --> checkDB","Course table has CourseName: "+
-//                                    crsName+"\tCourseID: "+crsid);
-//                            c.moveToNext();
-//                        }
-//                        ret = true;
-//                    }
-//                }
-//            }
-//        }catch(SQLiteException e){
-//            android.util.Log.w("RouteDB->checkDB",e.getMessage());
-//        }
-//        if(checkDB != null){
-//            checkDB.close();
-//        }
-//        return ret;
-//    }
-
     public void copyDB() throws IOException{
         try {
             if(!created){
                 android.util.Log.w("ASDADGASD", "WHARRGGGGLE");
                 // only copy the database if it doesn't already exist in my database directory
                 debug("RouteDB --> copyDB", "checkDB returned false, starting copy");
-                InputStream ip =  context.getResources().openRawResource(R.raw.routes);
+                InputStream ip =  context.getResources().openRawResource(R.raw.places);
                 // make sure the database path exists. if not, create it.
                 File aFile = new File(dbPath);
                 if(!aFile.exists()){
